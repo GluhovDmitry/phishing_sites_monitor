@@ -29,5 +29,6 @@ def parse_html(url):
 def data_loader(number, title, urls):
     models.Banks.objects.create(number=number, title=title, urls=urls)
 
+
 if __name__ == '__main__':
     parse_html('https://cbr.ru/banking_sector/credit/cowebsites/')
