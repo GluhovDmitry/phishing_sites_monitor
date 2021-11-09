@@ -5,3 +5,5 @@ __pychache__/
 db.sqlite3
 run
 __pychache__
+mainApp/__pycache__/
+mainApp/services/__pycache__/
