@@ -13,7 +13,7 @@ def save_active_urls():
             for domain in bank.urls:
                 is_social = False
                 parsed_domain = domain.split('/', 4)
-                for site in ['t.me', 'ok.ru', 'facebook.com', 'instagram.com', 'vk.com', 'youtube.com', 'twitter.com', 'zen.yandex.ru']:
+                for site in ['t.me', 'telegram.me', 'ok.ru', 'odnoklassniki.ru', 'facebook.com', 'instagram.com', 'vk.com', 'youtube.com', 'twitter.com', 'zen.yandex.ru']:
                     if parsed_domain[2] in [f'www.{site}', f'{site}'] or bool(re.search('livejournal', domain)):
                         is_social = True
 
@@ -33,7 +33,7 @@ def save_active_urls():
 def url_generator(domain):
     try:
         logger.info(f'processing {domain}')
-        data = dnstwist_fixed.main(registered=True, domain=domain, format=list)
+        data = dnstwist_fixed.main(registered=True, domain=domain, format=list, ssdeep=True)
         # logger.info(data)
     except Exception as e:
         logger.error(e)

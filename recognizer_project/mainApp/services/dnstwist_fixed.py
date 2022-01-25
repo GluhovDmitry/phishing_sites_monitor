@@ -871,31 +871,41 @@ def main(**kwargs):
 	if 'ssdeep' in kwargs and MODULE_SSDEEP and MODULE_REQUESTS:
 		request_url = ssdeep_url.full_uri() if ssdeep_url else url.full_uri()
 		p_cli('Fetching content from: %s ' % request_url)
+		logger.info('Fetching content from: %s ' % request_url)
 		try:
 			req = requests.get(request_url, timeout=REQUEST_TIMEOUT_HTTP, headers={'User-Agent': kwargs['useragent']})
 		except requests.exceptions.ConnectionError:
 			p_cli('Connection error\n')
+			logger.error('Connection error')
 			_exit(1)
 		except requests.exceptions.HTTPError:
 			p_cli('Invalid HTTP response\n')
+			logger.error('Invalid HTTP response')
 			_exit(1)
 		except requests.exceptions.Timeout:
 			p_cli('Timeout (%d seconds)\n' % REQUEST_TIMEOUT_HTTP)
+			logger.error('Timeout (%d seconds)\n' % REQUEST_TIMEOUT_HTTP)
 			_exit(1)
 		except Exception:
+
 			p_cli('Failed!\n')
+			logger.error('Failed')
 			_exit(1)
 		else:
 			if len(req.history) > 1:
 				p_cli('➔ %s ' % req.url.split('?')[0])
+				logger.info('➔ %s ' % req.url.split('?')[0])
 			p_cli('%d %s (%.1f Kbytes)\n' % (req.status_code, req.reason, float(len(req.text))/1000))
+			logger.info('%d %s (%.1f Kbytes)\n' % (req.status_code, req.reason, float(len(req.text))/1000))
 			if req.status_code // 100 == 2:
 				ssdeep_init = ssdeep.hash(''.join(req.text.split()).lower())
+				logger.info(ssdeep_init)
 				ssdeep_effective_url = req.url.split('?')[0]
 			else:
 				kwargs['ssdeep'] = False
 
 	p_cli('Processing %d permutations ' % len(domains))
+	logger.info('Processing %d permutations ' % len(domains))
 
 	jobs = queue.Queue()
 

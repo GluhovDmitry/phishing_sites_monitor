@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block head %} <title>Банки</title> {% endblock %}
+{% block content %}
+
+
+<div class="list">
+    {% for obj in banks %}
+    <div id="post">
+    <h1><a href="{% url 'bank_detail' pk=obj.pk %}">{{ obj.title }}</a></h1><br>
+
+    <h1>{{ obj.content|truncatechars:100 }}</h1>
+    </div>
+    {% empty %}
+    <h1>Пусто!</h1>
+    {% endfor %}
+</div>
+
+{% endblock %}

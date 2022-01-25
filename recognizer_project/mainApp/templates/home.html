@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block head %} <title>Recognizit!</title> {% endblock %}
+{% block content %}
+
+<div class="post">
+    {% for obj in posts %}
+    <h1><a href="{{ obj.get_absolute_url }}">{{ obj.title }}</a></h1>
+    <h1>{{ obj.content|truncatechars:1000 }}</h1>
+    {% empty %}
+	<h1>Пусто!</h1>
+    {% endfor %}
+</div>
+
+{% endblock %}

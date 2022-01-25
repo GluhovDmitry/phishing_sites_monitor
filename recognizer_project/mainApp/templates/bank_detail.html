@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<div id="post">
+    <h1>Рег номер {{ bank.number }}</h1>
+
+    <h1>{{ bank.title }}</h1>
+</div>
+<div id="post">
+    <h1>Валидные url</h1>
+    {% for obj in bank.urls %}
+        <h1>{{ obj }}</h1><br>
+        {% empty %}
+        <h1>Пусто!</h1>
+    {% endfor %}
+</div>
+<div id="post">
+    <h1>Возможные фейки</h1>
+    {% for obj in fakes %}
+        {% if obj.title == bank %}
+        <h1>{{ obj.url }}</h1><br>
+        {% endif %}
+        {% empty %}
+        <h1>Пусто!</h1>
+    {% endfor %}
+</div>
+{% endblock %}
